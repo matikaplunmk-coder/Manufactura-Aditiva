@@ -101,76 +101,76 @@ export default function Dfam() {
 
   return (
     <div className="grid gap-4 lg:grid-cols-[1fr_360px]">
-      <div className="rounded-xl border border-slate-800 bg-slate-900 p-3">
+      <div className="rounded-xl border border-zinc-200 bg-white shadow-sm p-3">
         <div className="mb-3 flex flex-wrap items-center gap-2">
-          <span className="text-sm text-slate-400">Orientación de construcción:</span>
+          <span className="text-sm text-zinc-600">Orientación de construcción:</span>
           {ANGLES.map((a) => (
-            <button key={a} onClick={() => setDeg(a)} className={`rounded-md border px-3 py-1.5 font-mono text-sm ${deg === a ? 'border-cyan-500/60 bg-cyan-500/15 text-cyan-200' : 'border-slate-700 text-slate-400 hover:bg-slate-800'}`}>
+            <button key={a} onClick={() => setDeg(a)} className={`rounded-md border px-3 py-1.5 font-mono text-sm ${deg === a ? 'border-amber-400 bg-amber-100 text-amber-950' : 'border-zinc-300 text-zinc-600 hover:bg-zinc-100'}`}>
               {a}°
             </button>
           ))}
         </div>
-        <svg viewBox="0 0 420 300" className="w-full rounded-lg border border-slate-800 bg-slate-950">
+        <svg viewBox="0 0 420 300" className="w-full rounded-lg border border-zinc-200 bg-zinc-50">
           <defs>
             <pattern id="sup" width="5" height="5" patternUnits="userSpaceOnUse">
-              <line x1="0" y1="0" x2="0" y2="5" stroke="#f87171" strokeWidth="1" />
+              <line x1="0" y1="0" x2="0" y2="5" stroke="#dc2626" strokeWidth="1" />
             </pattern>
             <marker id="arr" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="#fbbf24" />
+              <path d="M0,0 L8,4 L0,8 Z" fill="#92400e" />
             </marker>
             <marker id="arrC" markerWidth="8" markerHeight="8" refX="6" refY="4" orient="auto">
-              <path d="M0,0 L8,4 L0,8 Z" fill="#22d3ee" />
+              <path d="M0,0 L8,4 L0,8 Z" fill="#0369a1" />
             </marker>
           </defs>
           {/* líneas de capa */}
           {Array.from({ length: 26 }, (_, i) => (
-            <line key={i} x1="10" x2="410" y1={oy - i * 10} y2={oy - i * 10} stroke="#0f172a" />
+            <line key={i} x1="10" x2="410" y1={oy - i * 10} y2={oy - i * 10} stroke="#e4e4e7" />
           ))}
-          <rect x="10" y={oy} width="400" height="10" fill="#334155" />
-          <text x="14" y={oy + 21} fill="#64748b" fontSize="7" fontFamily="monospace">Placa base</text>
+          <rect x="10" y={oy} width="400" height="10" fill="#a1a1aa" />
+          <text x="14" y={oy + 21} fill="#71717a" fontSize="7" fontFamily="monospace">Placa base</text>
           {/* soportes */}
           {r.overhangs.map((o, i) => {
             const [ax, ay] = o.a
             const [bx, by] = o.b
             const bot = o.bottom
             return (
-              <polygon key={i} points={`${P([ax, ay])} ${P([bx, by])} ${P([bx, bot])} ${P([ax, bot])}`} fill="url(#sup)" stroke="#f87171" strokeOpacity="0.4" />
+              <polygon key={i} points={`${P([ax, ay])} ${P([bx, by])} ${P([bx, bot])} ${P([ax, bot])}`} fill="url(#sup)" stroke="#dc2626" strokeOpacity="0.5" />
             )
           })}
-          <path d={path} fill="#475569" fillRule="evenodd" stroke="#cbd5e1" strokeWidth="1.5" />
+          <path d={path} fill="#52525b" fillRule="evenodd" stroke="#18181b" strokeWidth="1.5" />
           {/* aristas en voladizo */}
           {r.overhangs.map((o, i) => (
             <line key={i} x1={ox + o.a[0] * S} y1={oy - o.a[1] * S} x2={ox + o.b[0] * S} y2={oy - o.b[1] * S} stroke="#ef4444" strokeWidth="3" />
           ))}
           {/* ejes y carga */}
-          <line x1="385" y1="270" x2="385" y2="190" stroke="#22d3ee" strokeWidth="2" markerEnd="url(#arrC)" />
-          <text x="372" y="182" fill="#22d3ee" fontSize="8" fontFamily="monospace">Z</text>
-          <line x1={ox + f0[0] * S} y1={oy - f0[1] * S} x2={ox + f1[0] * S} y2={oy - f1[1] * S} stroke="#fbbf24" strokeWidth="2.5" markerEnd="url(#arr)" />
-          <text x={ox + f0[0] * S - 4} y={oy - f0[1] * S - 8} fill="#fbbf24" fontSize="8" fontFamily="monospace">F</text>
-          <text x="14" y="14" fill="#94a3b8" fontSize="7" fontFamily="monospace">Rojo = caras con ángulo &lt; 45° sobre la horizontal (soporte)</text>
-          <text x="14" y="24" fill="#fbbf24" fontSize="7" fontFamily="monospace">F = carga de trabajo (flexión de la pierna) · σ de raíz ∥ eje de la pierna</text>
+          <line x1="385" y1="270" x2="385" y2="190" stroke="#0369a1" strokeWidth="2" markerEnd="url(#arrC)" />
+          <text x="372" y="182" fill="#0369a1" fontSize="8" fontFamily="monospace">Z</text>
+          <line x1={ox + f0[0] * S} y1={oy - f0[1] * S} x2={ox + f1[0] * S} y2={oy - f1[1] * S} stroke="#d97706" strokeWidth="2.5" markerEnd="url(#arr)" />
+          <text x={ox + f0[0] * S - 4} y={oy - f0[1] * S - 8} fill="#92400e" fontSize="8" fontFamily="monospace">F</text>
+          <text x="14" y="14" fill="#52525b" fontSize="7" fontFamily="monospace">Rojo = caras con ángulo &lt; 45° sobre la horizontal (soporte)</text>
+          <text x="14" y="24" fill="#92400e" fontSize="7" fontFamily="monospace">F = carga de trabajo (flexión de la pierna) · σ de raíz ∥ eje de la pierna</text>
         </svg>
       </div>
 
       <div className="space-y-3">
         <div className="grid grid-cols-3 gap-2 text-center">
           {[
-            ['Altura Z', `${r.H.toFixed(1)} mm`, 'text-cyan-300'],
-            ['Capas', `${r.layers}`, 'text-slate-200'],
-            ['Tiempo est.', fmt(r.hours), 'text-cyan-300'],
+            ['Altura Z', `${r.H.toFixed(1)} mm`, 'text-amber-900'],
+            ['Capas', `${r.layers}`, 'text-zinc-800'],
+            ['Tiempo est.', fmt(r.hours), 'text-amber-900'],
           ].map(([k, v, c]) => (
-            <div key={k} className="rounded-lg border border-slate-800 bg-slate-900 p-2.5">
-              <div className="text-[11px] text-slate-500">{k}</div>
+            <div key={k} className="rounded-lg border border-zinc-200 bg-white shadow-sm p-2.5">
+              <div className="text-[11px] text-zinc-500">{k}</div>
               <div className={`font-mono text-sm ${c}`}>{v}</div>
             </div>
           ))}
         </div>
-        <div className="rounded-lg border border-slate-800 bg-slate-900 p-3">
-          <div className="text-xs text-slate-500">Área de soporte proyectada (caras &lt; 45°)</div>
-          <div className="font-mono text-2xl text-rose-300">{r.projArea.toFixed(0)} mm²</div>
-          <div className="text-xs text-slate-500">Volumen de soporte ≈ {(r.supVol / 1000).toFixed(1)} cm³ (densidad 15 %) · profundidad {DEPTH} mm</div>
+        <div className="rounded-lg border border-zinc-200 bg-white shadow-sm p-3">
+          <div className="text-xs text-zinc-500">Área de soporte proyectada (caras &lt; 45°)</div>
+          <div className="font-mono text-2xl text-rose-700">{r.projArea.toFixed(0)} mm²</div>
+          <div className="text-xs text-zinc-500">Volumen de soporte ≈ {(r.supVol / 1000).toFixed(1)} cm³ (densidad 15 %) · profundidad {DEPTH} mm</div>
         </div>
-        <div className={`rounded-lg border p-3 text-sm ${risk === 'crit' ? 'border-rose-600/50 bg-rose-950/40 text-rose-200' : risk === 'mod' ? 'border-amber-600/40 bg-amber-950/30 text-amber-200' : 'border-emerald-600/40 bg-emerald-950/30 text-emerald-200'}`}>
+        <div className={`rounded-lg border p-3 text-sm ${risk === 'crit' ? 'border-rose-300 bg-rose-50 text-rose-900' : risk === 'mod' ? 'border-amber-300 bg-amber-50 text-amber-950' : 'border-emerald-300 bg-emerald-50 text-emerald-900'}`}>
           <div className="flex items-center gap-2 font-semibold">
             {risk === 'ok' ? <CheckCircle2 size={16} /> : <AlertTriangle size={16} />}
             {risk === 'crit' ? 'Advertencia estructural: tracción interlaminar' : risk === 'mod' ? 'Precaución: tracción parcialmente interlaminar' : 'Carga alineada con el plano de capas'}
@@ -182,13 +182,13 @@ export default function Dfam() {
             {risk === 'ok' && ' La tracción principal se resiste en el plano XY, donde el material es más resistente.'}
           </p>
         </div>
-        <table className="w-full overflow-hidden rounded-lg border border-slate-800 text-xs">
-          <thead className="bg-slate-900 text-slate-500">
+        <table className="w-full overflow-hidden rounded-lg border border-zinc-200 text-xs">
+          <thead className="bg-white text-zinc-500">
             <tr><th className="p-2 text-left">Orient.</th><th>Z</th><th>Soporte</th><th>σ⊥capa</th></tr>
           </thead>
           <tbody>
             {ANGLES.map((a) => (
-              <tr key={a} className={`border-t border-slate-800 text-center font-mono ${a === deg ? 'bg-cyan-500/10 text-cyan-100' : 'text-slate-400'}`}>
+              <tr key={a} className={`border-t border-zinc-200 text-center font-mono ${a === deg ? 'bg-amber-50 text-amber-950' : 'text-zinc-600'}`}>
                 <td className="p-2 text-left">{a}°{results[a].projArea - minArea < 1 && ' ★'}</td>
                 <td>{results[a].H.toFixed(0)} mm</td>
                 <td>{results[a].projArea.toFixed(0)} mm²</td>
@@ -197,7 +197,7 @@ export default function Dfam() {
             ))}
           </tbody>
         </table>
-        <p className="flex gap-2 text-xs text-slate-500"><Info size={14} className="mt-0.5 shrink-0" /> ★ = menor área de soporte. El compromiso típico: mínima altura (tiempo), mínimo soporte y carga fuera del eje Z.</p>
+        <p className="flex gap-2 text-xs text-zinc-500"><Info size={14} className="mt-0.5 shrink-0" /> ★ = menor área de soporte. El compromiso típico: mínima altura (tiempo), mínimo soporte y carga fuera del eje Z.</p>
       </div>
     </div>
   )

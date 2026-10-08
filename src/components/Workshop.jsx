@@ -15,7 +15,7 @@ export default function Workshop() {
     <div className="space-y-4">
       <div className="flex flex-wrap gap-2">
         {SUBS.map(({ id, label, icon: Icon }) => (
-          <button key={id} onClick={() => setSub(id)} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${sub === id ? 'border-cyan-500/60 bg-cyan-500/10 text-cyan-200' : 'border-slate-800 bg-slate-900 text-slate-400 hover:border-slate-600'}`}>
+          <button key={id} onClick={() => setSub(id)} className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm ${sub === id ? 'border-amber-400 bg-amber-50 text-amber-950' : 'border-zinc-200 bg-white shadow-sm text-zinc-600 hover:border-zinc-300'}`}>
             <Icon size={15} /> {label}
           </button>
         ))}

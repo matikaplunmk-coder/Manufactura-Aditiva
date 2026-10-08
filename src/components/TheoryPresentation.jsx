@@ -6,9 +6,9 @@ import {
 import { MODULES } from '../data/theory.js'
 
 const CALLOUT = {
-  key: { icon: KeyRound, cls: 'border-cyan-500/50 bg-cyan-500/10 text-cyan-100', label: 'Concepto clave' },
-  warn: { icon: ShieldAlert, cls: 'border-amber-500/50 bg-amber-500/10 text-amber-100', label: 'Atención' },
-  info: { icon: Info, cls: 'border-sky-500/40 bg-sky-500/10 text-sky-100', label: 'Dato técnico' },
+  key: { icon: KeyRound, cls: 'border-amber-400 bg-amber-50 text-amber-950', label: 'Concepto clave' },
+  warn: { icon: ShieldAlert, cls: 'border-amber-300 bg-amber-50 text-amber-950', label: 'Atención' },
+  info: { icon: Info, cls: 'border-sky-300 bg-sky-50 text-sky-900', label: 'Dato técnico' },
 }
 
 // Pliega acentos y mayúsculas conservando la longitud (para resaltar coincidencias).
@@ -22,7 +22,7 @@ function Highlight({ text, query }) {
   let i = 0
   let j
   while ((j = f.indexOf(q, i)) !== -1) {
-    parts.push(text.slice(i, j), <mark key={j} className="rounded bg-amber-400/30 px-0.5 text-amber-100">{text.slice(j, j + q.length)}</mark>)
+    parts.push(text.slice(i, j), <mark key={j} className="rounded bg-amber-100 px-0.5 text-amber-950">{text.slice(j, j + q.length)}</mark>)
     i = j + q.length
   }
   parts.push(text.slice(i))
@@ -48,11 +48,11 @@ function Flow({ steps, big }) {
     <div className="flex flex-wrap items-center gap-2">
       {steps.map((s, i) => (
         <div key={s} className="flex items-center gap-2">
-          <div className={`rounded-lg border border-slate-600 bg-slate-950 text-slate-100 ${big ? 'px-4 py-2.5 text-base' : 'px-3 py-1.5 text-sm'}`}>
-            <span className="mr-2 font-mono text-xs text-cyan-400">{i + 1}</span>
+          <div className={`rounded-lg border border-zinc-300 bg-zinc-50 text-zinc-900 ${big ? 'px-4 py-2.5 text-base' : 'px-3 py-1.5 text-sm'}`}>
+            <span className="mr-2 font-mono text-xs text-amber-800">{i + 1}</span>
             {s}
           </div>
-          {i < steps.length - 1 && <ArrowRight size={big ? 20 : 16} className="text-cyan-500/70" />}
+          {i < steps.length - 1 && <ArrowRight size={big ? 20 : 16} className="text-amber-600" />}
         </div>
       ))}
     </div>
@@ -64,7 +64,7 @@ function SimButton({ sim, onOpenSim }) {
   return (
     <button
       onClick={() => onOpenSim({ tech: sim.tech, mode: sim.mode })}
-      className="inline-flex items-center gap-2 rounded-lg bg-cyan-500 px-4 py-2 text-sm font-semibold text-slate-950 hover:bg-cyan-400"
+      className="inline-flex items-center gap-2 rounded-lg bg-amber-400 px-4 py-2 text-sm font-semibold text-zinc-950 hover:bg-amber-400"
     >
       <PlayCircle size={18} /> {sim.label || 'Ir al Simulador'}
     </button>
@@ -117,36 +117,36 @@ function Slides({ onOpenSim }) {
 
   const m = cur.module
   return (
-    <div ref={root} className={`flex flex-col bg-slate-950 ${full ? 'h-screen p-4' : ''}`}>
+    <div ref={root} className={`flex flex-col bg-zinc-50 ${full ? 'h-screen p-4' : ''}`}>
       <div className="mb-3 flex items-center gap-3">
-        <button onClick={() => setMenu((v) => !v)} className="rounded-md border border-slate-700 p-2 text-slate-300 hover:bg-slate-800" title="Índice rápido">
+        <button onClick={() => setMenu((v) => !v)} className="rounded-md border border-zinc-300 p-2 text-zinc-700 hover:bg-zinc-100" title="Índice rápido">
           <List size={16} />
         </button>
-        <div className="h-2 flex-1 overflow-hidden rounded bg-slate-800" role="progressbar" aria-valuemin={0} aria-valuemax={slides.length} aria-valuenow={i + 1}>
-          <div className="h-full bg-cyan-400 transition-all" style={{ width: `${((i + 1) / slides.length) * 100}%` }} />
+        <div className="h-2 flex-1 overflow-hidden rounded bg-zinc-100" role="progressbar" aria-valuemin={0} aria-valuemax={slides.length} aria-valuenow={i + 1}>
+          <div className="h-full bg-amber-400 transition-all" style={{ width: `${((i + 1) / slides.length) * 100}%` }} />
         </div>
-        <span className="font-mono text-xs text-slate-400">{i + 1} / {slides.length}</span>
-        <button onClick={toggleFull} className="rounded-md border border-slate-700 p-2 text-slate-300 hover:bg-slate-800" title="Pantalla completa">
+        <span className="font-mono text-xs text-zinc-600">{i + 1} / {slides.length}</span>
+        <button onClick={toggleFull} className="rounded-md border border-zinc-300 p-2 text-zinc-700 hover:bg-zinc-100" title="Pantalla completa">
           {full ? <Minimize2 size={16} /> : <Maximize2 size={16} />}
         </button>
       </div>
 
       <div className={`grid flex-1 gap-4 ${menu ? 'lg:grid-cols-[280px_1fr]' : ''}`}>
         {menu && (
-          <nav className="max-h-[70vh] overflow-y-auto rounded-xl border border-slate-800 bg-slate-900 p-2 lg:max-h-none" aria-label="Índice">
+          <nav className="max-h-[70vh] overflow-y-auto rounded-xl border border-zinc-200 bg-white shadow-sm p-2 lg:max-h-none" aria-label="Índice">
             {MODULES.map((mod) => {
               const first = slides.findIndex((s) => s.module === mod)
               const active = mod === m
               return (
                 <div key={mod.id}>
-                  <button onClick={() => setI(first)} className={`flex w-full items-start gap-2 rounded-md px-2 py-2 text-left text-sm ${active ? 'bg-cyan-500/15 text-cyan-100' : 'text-slate-300 hover:bg-slate-800'}`}>
-                    <span className="font-mono text-xs text-cyan-400">{mod.n}</span>
+                  <button onClick={() => setI(first)} className={`flex w-full items-start gap-2 rounded-md px-2 py-2 text-left text-sm ${active ? 'bg-amber-100 text-amber-950' : 'text-zinc-700 hover:bg-zinc-100'}`}>
+                    <span className="font-mono text-xs text-amber-800">{mod.n}</span>
                     {mod.title}
                   </button>
                   {active && (
-                    <div className="mb-1 ml-6 border-l border-slate-700 pl-2">
+                    <div className="mb-1 ml-6 border-l border-zinc-300 pl-2">
                       {slides.map((s, k) => s.module === mod && s.kind === 'slide' && (
-                        <button key={k} onClick={() => setI(k)} className={`block w-full rounded px-2 py-1 text-left text-xs ${k === i ? 'text-cyan-300' : 'text-slate-500 hover:text-slate-300'}`}>
+                        <button key={k} onClick={() => setI(k)} className={`block w-full rounded px-2 py-1 text-left text-xs ${k === i ? 'text-amber-900' : 'text-zinc-500 hover:text-zinc-700'}`}>
                           {s.slide.title}
                         </button>
                       ))}
@@ -158,29 +158,29 @@ function Slides({ onOpenSim }) {
           </nav>
         )}
 
-        <article className={`flex min-h-[460px] flex-col rounded-2xl border border-slate-800 bg-gradient-to-br from-slate-900 to-slate-950 p-6 md:p-10 ${full ? 'overflow-y-auto' : ''}`}>
-          <div className="font-mono text-xs uppercase tracking-widest text-cyan-400">
+        <article className={`flex min-h-[460px] flex-col rounded-2xl border border-zinc-200 bg-gradient-to-br from-white to-zinc-50 p-6 md:p-10 ${full ? 'overflow-y-auto' : ''}`}>
+          <div className="font-mono text-xs uppercase tracking-widest text-amber-800">
             Módulo {m.n} · {cur.kind === 'cover' ? 'Portada' : `Diapositiva ${cur.idx}/${cur.total}`}
           </div>
           {cur.kind === 'cover' ? (
             <div className="flex flex-1 flex-col justify-center gap-5">
-              <div className="font-mono text-7xl font-bold text-cyan-500/30">{String(m.n).padStart(2, '0')}</div>
-              <h2 className="text-3xl font-bold text-slate-50 md:text-5xl">{m.title}</h2>
-              <p className="text-lg text-slate-400">{m.short}</p>
+              <div className="font-mono text-7xl font-bold text-zinc-300">{String(m.n).padStart(2, '0')}</div>
+              <h2 className="text-3xl font-bold text-zinc-900 md:text-5xl">{m.title}</h2>
+              <p className="text-lg text-zinc-600">{m.short}</p>
               <div className="flex flex-wrap gap-2">
                 {m.slides.map((s) => (
-                  <span key={s.title} className="rounded-full border border-slate-700 px-3 py-1 text-sm text-slate-400">{s.title}</span>
+                  <span key={s.title} className="rounded-full border border-zinc-300 px-3 py-1 text-sm text-zinc-600">{s.title}</span>
                 ))}
               </div>
               <div><SimButton sim={cur.sim} onOpenSim={onOpenSim} /></div>
             </div>
           ) : (
             <div className="mt-2 flex flex-1 flex-col gap-5">
-              <h2 className={`font-bold text-slate-50 ${full ? 'text-4xl' : 'text-2xl md:text-3xl'}`}>{cur.slide.title}</h2>
-              <ul className={`space-y-3 ${full ? 'text-xl' : 'text-base md:text-lg'} text-slate-200`}>
+              <h2 className={`font-bold text-zinc-900 ${full ? 'text-4xl' : 'text-2xl md:text-3xl'}`}>{cur.slide.title}</h2>
+              <ul className={`space-y-3 ${full ? 'text-xl' : 'text-base md:text-lg'} text-zinc-800`}>
                 {cur.slide.bullets.map((b) => (
                   <li key={b} className="flex gap-3">
-                    <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-cyan-400" />
+                    <span className="mt-2.5 h-2 w-2 shrink-0 rounded-full bg-amber-400" />
                     <span>{b}</span>
                   </li>
                 ))}
@@ -194,11 +194,11 @@ function Slides({ onOpenSim }) {
       </div>
 
       <div className="mt-3 flex items-center justify-between">
-        <button onClick={() => go(-1)} disabled={i === 0} className="flex items-center gap-1 rounded-md border border-slate-700 px-4 py-2 text-sm text-slate-200 hover:bg-slate-800 disabled:opacity-30">
+        <button onClick={() => go(-1)} disabled={i === 0} className="flex items-center gap-1 rounded-md border border-zinc-300 px-4 py-2 text-sm text-zinc-800 hover:bg-zinc-100 disabled:opacity-30">
           <ChevronLeft size={16} /> Anterior
         </button>
-        <span className="hidden text-xs text-slate-600 sm:block">Usá las flechas ← → del teclado</span>
-        <button onClick={() => go(1)} disabled={i === slides.length - 1} className="flex items-center gap-1 rounded-md bg-cyan-500/20 px-4 py-2 text-sm text-cyan-100 hover:bg-cyan-500/30 disabled:opacity-30">
+        <span className="hidden text-xs text-zinc-500 sm:block">Usá las flechas ← → del teclado</span>
+        <button onClick={() => go(1)} disabled={i === slides.length - 1} className="flex items-center gap-1 rounded-md bg-amber-400 px-4 py-2 text-sm font-semibold text-zinc-950 hover:bg-amber-500 disabled:opacity-30">
           Siguiente <ChevronRight size={16} />
         </button>
       </div>
@@ -235,56 +235,56 @@ function Reading({ onOpenSim }) {
     <div className="space-y-4">
       <div className="flex flex-wrap items-center gap-3">
         <div className="relative min-w-[260px] flex-1">
-          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-slate-500" />
+          <Search size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-zinc-500" />
           <input
             value={query}
             onChange={(e) => setQuery(e.target.value)}
             placeholder="Buscar por palabra clave (ej. zona muerta, HIP, Bowden…)"
-            className="w-full rounded-lg border border-slate-700 bg-slate-900 py-2 pl-9 pr-9 text-sm text-slate-100 outline-none focus:border-cyan-500"
+            className="w-full rounded-lg border border-zinc-300 bg-white shadow-sm py-2 pl-9 pr-9 text-sm text-zinc-900 outline-none focus:border-amber-500"
           />
           {query && (
-            <button onClick={() => setQuery('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-slate-500 hover:text-slate-200" aria-label="Limpiar">
+            <button onClick={() => setQuery('')} className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-500 hover:text-zinc-800" aria-label="Limpiar">
               <X size={16} />
             </button>
           )}
         </div>
         {!q && (
           <div className="flex gap-2 text-sm">
-            <button onClick={() => setOpen(new Set(MODULES.map((m) => m.id)))} className="rounded-md border border-slate-700 px-3 py-2 text-slate-300 hover:bg-slate-800">Expandir todo</button>
-            <button onClick={() => setOpen(new Set())} className="rounded-md border border-slate-700 px-3 py-2 text-slate-300 hover:bg-slate-800">Contraer todo</button>
+            <button onClick={() => setOpen(new Set(MODULES.map((m) => m.id)))} className="rounded-md border border-zinc-300 px-3 py-2 text-zinc-700 hover:bg-zinc-100">Expandir todo</button>
+            <button onClick={() => setOpen(new Set())} className="rounded-md border border-zinc-300 px-3 py-2 text-zinc-700 hover:bg-zinc-100">Contraer todo</button>
           </div>
         )}
       </div>
       {q && (
-        <div className="text-sm text-slate-400">
+        <div className="text-sm text-zinc-600">
           {results.length === 0 ? 'Sin resultados para ' : `${results.reduce((n, r) => n + r.hits, 0)} coincidencias en ${results.length} módulo(s) para `}
-          <span className="text-amber-300">"{q}"</span>
+          <span className="text-amber-800">"{q}"</span>
         </div>
       )}
 
       {results.map(({ m, sections }) => (
-        <section key={m.id} className="overflow-hidden rounded-xl border border-slate-800 bg-slate-900">
-          <button onClick={() => !q && toggle(m.id)} aria-expanded={isOpen(m.id)} className="flex w-full items-center gap-3 p-4 text-left hover:bg-slate-800/60">
-            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-cyan-500/15 font-mono text-sm text-cyan-300">{m.n}</span>
+        <section key={m.id} className="overflow-hidden rounded-xl border border-zinc-200 bg-white shadow-sm">
+          <button onClick={() => !q && toggle(m.id)} aria-expanded={isOpen(m.id)} className="flex w-full items-center gap-3 p-4 text-left hover:bg-zinc-100">
+            <span className="flex h-8 w-8 shrink-0 items-center justify-center rounded-lg bg-amber-100 font-mono text-sm text-amber-900">{m.n}</span>
             <span className="flex-1">
-              <span className="block font-semibold text-slate-100"><Highlight text={m.title} query={q} /></span>
-              <span className="block text-xs text-slate-500">{m.short}</span>
+              <span className="block font-semibold text-zinc-900"><Highlight text={m.title} query={q} /></span>
+              <span className="block text-xs text-zinc-500">{m.short}</span>
             </span>
-            <ChevronDown size={18} className={`text-slate-400 transition ${isOpen(m.id) ? 'rotate-180' : ''}`} />
+            <ChevronDown size={18} className={`text-zinc-600 transition ${isOpen(m.id) ? 'rotate-180' : ''}`} />
           </button>
           {isOpen(m.id) && (
-            <div className="space-y-5 border-t border-slate-800 p-5">
+            <div className="space-y-5 border-t border-zinc-200 p-5">
               {sections.map((s) => (
                 <div key={s.h}>
-                  <h4 className="mb-2 text-base font-semibold text-cyan-300"><Highlight text={s.h} query={q} /></h4>
+                  <h4 className="mb-2 text-base font-semibold text-amber-900"><Highlight text={s.h} query={q} /></h4>
                   {s.p.map((t) => (
-                    <p key={t} className="mb-2 text-sm leading-relaxed text-slate-300"><Highlight text={t} query={q} /></p>
+                    <p key={t} className="mb-2 text-sm leading-relaxed text-zinc-700"><Highlight text={t} query={q} /></p>
                   ))}
                   {s.list && (
                     <ul className="ml-1 space-y-1.5">
                       {s.list.map((t) => (
-                        <li key={t} className="flex gap-2 text-sm leading-relaxed text-slate-300">
-                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-cyan-400" />
+                        <li key={t} className="flex gap-2 text-sm leading-relaxed text-zinc-700">
+                          <span className="mt-2 h-1.5 w-1.5 shrink-0 rounded-full bg-amber-400" />
                           <span><Highlight text={t} query={q} /></span>
                         </li>
                       ))}
@@ -309,9 +309,9 @@ export default function TheoryPresentation({ onOpenSim }) {
   ]
   return (
     <div className="space-y-4">
-      <div className="inline-flex rounded-lg border border-slate-700 bg-slate-900 p-1">
+      <div className="inline-flex rounded-lg border border-zinc-300 bg-white shadow-sm p-1">
         {tabs.map(({ id, label, icon: Icon }) => (
-          <button key={id} onClick={() => setMode(id)} className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm transition ${mode === id ? 'bg-cyan-500/20 text-cyan-200' : 'text-slate-400 hover:text-slate-200'}`}>
+          <button key={id} onClick={() => setMode(id)} className={`flex items-center gap-2 rounded-md px-4 py-2 text-sm transition ${mode === id ? 'bg-amber-400 font-semibold text-zinc-950' : 'text-zinc-600 hover:text-zinc-800'}`}>
             <Icon size={15} /> {label}
           </button>
         ))}

@@ -152,21 +152,21 @@ function StaircaseChart({ h }) {
   }, [h])
   const nLayers = Math.ceil(R / h)
   return (
-    <svg viewBox="0 0 330 290" className="w-full rounded-lg bg-slate-950 border border-slate-800">
+    <svg viewBox="0 0 330 290" className="w-full rounded-lg bg-zinc-50 border border-zinc-200">
       <defs>
         <pattern id="hatch" width="6" height="6" patternUnits="userSpaceOnUse" patternTransform="rotate(45)">
-          <line x1="0" y1="0" x2="0" y2="6" stroke="#475569" strokeWidth="1" />
+          <line x1="0" y1="0" x2="0" y2="6" stroke="#a1a1aa" strokeWidth="1" />
         </pattern>
       </defs>
-      <path d={steps} fill="url(#hatch)" stroke="#94a3b8" strokeWidth="1" />
-      <path d={arc} fill="none" stroke="#22d3ee" strokeWidth="1.5" strokeDasharray="5 3" />
-      <line x1={ox} y1={oy} x2={ox + R * s + 20} y2={oy} stroke="#475569" />
-      <text x="150" y="24" fill="#94a3b8" fontSize="10" fontFamily="monospace">Corte · borde R = {R} mm</text>
-      <text x="150" y="40" fill="#22d3ee" fontSize="10" fontFamily="monospace">- - geometría CAD ideal</text>
-      <text x="150" y="56" fill="#cbd5e1" fontSize="10" fontFamily="monospace">▒ capas ({nLayers})</text>
-      <text x="150" y="72" fill="#f87171" fontSize="10" fontFamily="monospace">↑ cúspide máx = h</text>
-      <text x={ox + R * s + 4} y={oy - 6} fill="#64748b" fontSize="10" fontFamily="monospace">cúspide → 0</text>
-      <text x="14" y="278" fill="#64748b" fontSize="10" fontFamily="monospace">Dirección de construcción ↑ Z · h = {h.toFixed(2)} mm</text>
+      <path d={steps} fill="url(#hatch)" stroke="#3f3f46" strokeWidth="1" />
+      <path d={arc} fill="none" stroke="#d97706" strokeWidth="2" strokeDasharray="5 3" />
+      <line x1={ox} y1={oy} x2={ox + R * s + 20} y2={oy} stroke="#71717a" />
+      <text x="150" y="24" fill="#52525b" fontSize="10" fontFamily="monospace">Corte · borde R = {R} mm</text>
+      <text x="150" y="40" fill="#92400e" fontSize="10" fontFamily="monospace">- - geometría CAD ideal</text>
+      <text x="150" y="56" fill="#3f3f46" fontSize="10" fontFamily="monospace">▒ capas ({nLayers})</text>
+      <text x="150" y="72" fill="#b91c1c" fontSize="10" fontFamily="monospace">↑ cúspide máx = h</text>
+      <text x={ox + R * s + 4} y={oy - 6} fill="#71717a" fontSize="10" fontFamily="monospace">cúspide → 0</text>
+      <text x="14" y="278" fill="#71717a" fontSize="10" fontFamily="monospace">Dirección de construcción ↑ Z · h = {h.toFixed(2)} mm</text>
     </svg>
   )
 }
@@ -180,14 +180,14 @@ function Curve({ title, unit, fn, h, color, fmt }) {
   const Y = (v) => 52 - ((v - min) / (max - min || 1)) * 40
   const d = hs.map((x, i) => `${i ? 'L' : 'M'} ${X(x)} ${Y(vals[i])}`).join(' ')
   return (
-    <div className="rounded-lg border border-slate-800 bg-slate-950 p-2">
-      <div className="text-[11px] text-slate-500 flex justify-between font-mono">
+    <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-2">
+      <div className="text-[11px] text-zinc-500 flex justify-between font-mono">
         <span>{title}</span>
-        <span style={{ color }}>{fmt(fn(h))} {unit}</span>
+        <span className="font-semibold text-zinc-900">{fmt(fn(h))} {unit}</span>
       </div>
       <svg viewBox="0 0 200 60" className="w-full">
         <path d={d} fill="none" stroke={color} strokeWidth="1.5" />
-        <line x1={X(h)} y1="4" x2={X(h)} y2="56" stroke="#475569" strokeDasharray="2 2" />
+        <line x1={X(h)} y1="4" x2={X(h)} y2="56" stroke="#a1a1aa" strokeDasharray="2 2" />
         <circle cx={X(h)} cy={Y(fn(h))} r="3.5" fill={color} />
       </svg>
     </div>
@@ -224,7 +224,7 @@ export default function Simulator({ target }) {
               key={id}
               onClick={() => setTech(id)}
               className={`flex items-center gap-2 rounded-lg border px-3 py-2 text-sm transition ${
-                tech === id ? 'border-cyan-500/60 bg-cyan-500/10 text-cyan-200' : 'border-slate-800 bg-slate-900 text-slate-400 hover:border-slate-600'
+                tech === id ? 'border-amber-400 bg-amber-50 text-amber-950' : 'border-zinc-200 bg-white shadow-sm text-zinc-600 hover:border-zinc-300'
               }`}
             >
               <Icon size={15} /> {name}
@@ -233,24 +233,24 @@ export default function Simulator({ target }) {
         </div>
 
         <div className="grid gap-4 lg:grid-cols-[1fr_340px]">
-          <div className="rounded-xl border border-slate-800 bg-slate-900 p-3">
-            <canvas ref={canvasRef} className="w-full rounded-lg" style={{ aspectRatio: `${W} / ${H}` }} />
+          <div className="rounded-xl border border-zinc-200 bg-white shadow-sm p-3">
+            <canvas ref={canvasRef} className="w-full rounded-lg border border-zinc-300 bg-zinc-950" style={{ aspectRatio: `${W} / ${H}` }} />
             <div className="mt-3 flex flex-wrap items-center gap-3">
-              <button onClick={() => setPlaying((p) => !p)} className="flex items-center gap-1.5 rounded-md bg-slate-800 px-3 py-1.5 text-sm hover:bg-slate-700">
+              <button onClick={() => setPlaying((p) => !p)} className="flex items-center gap-1.5 rounded-md bg-zinc-100 px-3 py-1.5 text-sm hover:bg-zinc-200">
                 {playing ? <Pause size={14} /> : <Play size={14} />} {playing ? 'Pausar' : 'Reanudar'}
               </button>
-              <label className="flex items-center gap-2 text-xs text-slate-400">
+              <label className="flex items-center gap-2 text-xs text-zinc-600">
                 Velocidad
                 <input type="range" min="0.25" max="3" step="0.25" value={speed} onChange={(e) => setSpeed(+e.target.value)} />
                 <span className="font-mono w-8">{speed}×</span>
               </label>
               {MODES[tech] && (
-                <div className="ml-auto flex rounded-md border border-slate-700 overflow-hidden">
+                <div className="ml-auto flex rounded-md border border-zinc-300 overflow-hidden">
                   {MODES[tech].map((m) => (
                     <button
                       key={m.id}
                       onClick={() => setModes((s) => ({ ...s, [tech]: m.id }))}
-                      className={`px-3 py-1.5 text-sm ${mode === m.id ? 'bg-cyan-500/20 text-cyan-200' : 'text-slate-400 hover:bg-slate-800'}`}
+                      className={`px-3 py-1.5 text-sm ${mode === m.id ? 'bg-amber-100 text-amber-950' : 'text-zinc-600 hover:bg-zinc-100'}`}
                     >
                       {m.label}
                     </button>
@@ -261,18 +261,18 @@ export default function Simulator({ target }) {
           </div>
 
           <aside className="space-y-3">
-            <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-              <div className="text-[11px] uppercase tracking-wider text-cyan-400 font-mono">{TECHS.find((x) => x.id === tech).short}</div>
-              <div className="mt-1 font-semibold text-slate-100">{info.step || '…'}</div>
-              <p className="mt-1 text-sm text-slate-400 leading-relaxed">{info.detail}</p>
+            <div className="rounded-xl border border-zinc-200 bg-white shadow-sm p-4">
+              <div className="text-[11px] uppercase tracking-wider text-amber-800 font-mono">{TECHS.find((x) => x.id === tech).short}</div>
+              <div className="mt-1 font-semibold text-zinc-900">{info.step || '…'}</div>
+              <p className="mt-1 text-sm text-zinc-600 leading-relaxed">{info.detail}</p>
             </div>
-            <div className="rounded-xl border border-slate-800 bg-slate-900 p-4">
-              <div className="mb-2 text-xs uppercase tracking-wider text-slate-500 font-mono">Comparación técnica</div>
+            <div className="rounded-xl border border-zinc-200 bg-white shadow-sm p-4">
+              <div className="mb-2 text-xs uppercase tracking-wider text-zinc-500 font-mono">Comparación técnica</div>
               <dl className="space-y-2">
                 {NOTES[procKey].map(([k, v]) => (
                   <div key={k}>
-                    <dt className="text-xs text-cyan-300">{k}</dt>
-                    <dd className="text-sm text-slate-300">{v}</dd>
+                    <dt className="text-xs text-amber-900">{k}</dt>
+                    <dd className="text-sm text-zinc-700">{v}</dd>
                   </div>
                 ))}
               </dl>
@@ -281,20 +281,20 @@ export default function Simulator({ target }) {
         </div>
       </section>
 
-      <section className="rounded-xl border border-slate-800 bg-slate-900 p-4">
+      <section className="rounded-xl border border-zinc-200 bg-white shadow-sm p-4">
         <div className="flex flex-wrap items-center gap-4">
-          <div className="flex items-center gap-2 font-semibold text-slate-100">
-            <Ruler size={18} className="text-cyan-400" /> Espesor de capa · efecto escalera
+          <div className="flex items-center gap-2 font-semibold text-zinc-900">
+            <Ruler size={18} className="text-amber-800" /> Espesor de capa · efecto escalera
           </div>
           <div className="flex flex-1 min-w-[260px] items-center gap-3">
-            <span className="font-mono text-xs text-slate-500">0,05</span>
+            <span className="font-mono text-xs text-zinc-500">0,05</span>
             <input type="range" min="0.05" max="0.4" step="0.01" value={h} onChange={(e) => setH(+e.target.value)} className="flex-1" />
-            <span className="font-mono text-xs text-slate-500">0,40 mm</span>
-            <span className="rounded-md bg-cyan-500/15 px-2 py-1 font-mono text-sm text-cyan-200">h = {h.toFixed(2)} mm</span>
+            <span className="font-mono text-xs text-zinc-500">0,40 mm</span>
+            <span className="rounded-md bg-amber-100 px-2 py-1 font-mono text-sm text-amber-950">h = {h.toFixed(2)} mm</span>
           </div>
         </div>
-        <p className="mt-1 text-xs text-slate-500">
-          Proceso seleccionado: <span className="text-slate-300">{TECHS.find((x) => x.id === tech).name}{MODES[tech] ? ` · ${MODES[tech].find((m) => m.id === mode).label}` : ''}</span> ·
+        <p className="mt-1 text-xs text-zinc-500">
+          Proceso seleccionado: <span className="text-zinc-700">{TECHS.find((x) => x.id === tech).name}{MODES[tech] ? ` · ${MODES[tech].find((m) => m.id === mode).label}` : ''}</span> ·
           pieza de referencia: {PART_H} mm de alto, {PART_V} cm³. Modelo didáctico: Ra<sub>escalera</sub> = (cúspide)/4 con cúspide = h·cos α.
         </p>
 
@@ -302,26 +302,26 @@ export default function Simulator({ target }) {
           <StaircaseChart h={h} />
           <div className="space-y-3">
             <div className="grid gap-3 sm:grid-cols-3">
-              <div className="rounded-lg border border-slate-800 bg-slate-950 p-3">
-                <div className="flex items-center gap-1.5 text-xs text-slate-500"><Gauge size={13} /> Ra escalera (media / máx.)</div>
-                <div className="mt-1 font-mono text-xl text-amber-300">{raS.toFixed(1)} / {raMax.toFixed(0)} µm</div>
+              <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
+                <div className="flex items-center gap-1.5 text-xs text-zinc-500"><Gauge size={13} /> Ra escalera (media / máx.)</div>
+                <div className="mt-1 font-mono text-xl text-amber-800">{raS.toFixed(1)} / {raMax.toFixed(0)} µm</div>
               </div>
-              <div className="rounded-lg border border-slate-800 bg-slate-950 p-3">
-                <div className="flex items-center gap-1.5 text-xs text-slate-500"><Gauge size={13} /> Ra total estimada</div>
-                <div className={`mt-1 font-mono text-xl ${ok ? 'text-emerald-300' : 'text-rose-300'}`}>{raTot.toFixed(1)} µm</div>
-                <div className="text-[11px] text-slate-500">incluye Ra del proceso ≈ {proc.raBase} µm</div>
+              <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
+                <div className="flex items-center gap-1.5 text-xs text-zinc-500"><Gauge size={13} /> Ra total estimada</div>
+                <div className={`mt-1 font-mono text-xl ${ok ? 'text-emerald-700' : 'text-rose-700'}`}>{raTot.toFixed(1)} µm</div>
+                <div className="text-[11px] text-zinc-500">incluye Ra del proceso ≈ {proc.raBase} µm</div>
               </div>
-              <div className="rounded-lg border border-slate-800 bg-slate-950 p-3">
-                <div className="flex items-center gap-1.5 text-xs text-slate-500"><Clock size={13} /> Tiempo teórico</div>
-                <div className="mt-1 font-mono text-xl text-cyan-300">{fmtTime(total)}</div>
-                <div className="text-[11px] text-slate-500">{layers} capas</div>
+              <div className="rounded-lg border border-zinc-200 bg-zinc-50 p-3">
+                <div className="flex items-center gap-1.5 text-xs text-zinc-500"><Clock size={13} /> Tiempo teórico</div>
+                <div className="mt-1 font-mono text-xl text-amber-900">{fmtTime(total)}</div>
+                <div className="text-[11px] text-zinc-500">{layers} capas</div>
               </div>
             </div>
             <div className="grid gap-3 sm:grid-cols-2">
-              <Curve title="Ra escalera vs h" unit="µm" fn={raStairMean} h={h} color="#fbbf24" fmt={(v) => v.toFixed(1)} />
-              <Curve title="Tiempo vs h" unit="" fn={(x) => timeH(x, proc)} h={h} color="#22d3ee" fmt={fmtTime} />
+              <Curve title="Ra escalera vs h" unit="µm" fn={raStairMean} h={h} color="#d97706" fmt={(v) => v.toFixed(1)} />
+              <Curve title="Tiempo vs h" unit="" fn={(x) => timeH(x, proc)} h={h} color="#3f3f46" fmt={fmtTime} />
             </div>
-            <div className={`rounded-lg border p-3 text-sm ${ok ? 'border-emerald-700/50 bg-emerald-950/30 text-emerald-200' : 'border-slate-800 bg-slate-950 text-slate-300'}`}>
+            <div className={`rounded-lg border p-3 text-sm ${ok ? 'border-emerald-300 bg-emerald-50 text-emerald-900' : 'border-zinc-200 bg-zinc-50 text-zinc-700'}`}>
               {ok
                 ? 'Ra < 3 µm: compatible con acabado de alta precisión sin postproceso (típico de fotopolimerización con capas finas).'
                 : raTot > 25
