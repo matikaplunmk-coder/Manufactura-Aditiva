@@ -1,17 +1,29 @@
 import { useState } from 'react'
-import { Box, Activity, GitBranch, Wrench } from 'lucide-react'
+import { Box, Activity, GitBranch, Wrench, BookOpen } from 'lucide-react'
 import Simulator from './components/Simulator.jsx'
 import DecisionMatrix from './components/DecisionMatrix.jsx'
 import Workshop from './components/Workshop.jsx'
+import TheoryPresentation from './components/TheoryPresentation.jsx'
 
 const TABS = [
   { id: 'sim', label: 'Simulador Cinemático 2D', icon: Activity, C: Simulator },
   { id: 'mat', label: 'Matriz de Decisión y Postproceso', icon: GitBranch, C: DecisionMatrix },
   { id: 'taller', label: 'Taller DfAM y Casos de Planta', icon: Wrench, C: Workshop },
+  { id: 'teoria', label: 'Teoría y Presentación', icon: BookOpen, C: TheoryPresentation },
 ]
 
 export default function App() {
   const [tab, setTab] = useState('sim')
+  const [simTarget, setSimTarget] = useState(null)
+  const goTab = (id) => {
+    setSimTarget(null)
+    setTab(id)
+  }
+  const openSim = (target) => {
+    setSimTarget(target)
+    setTab('sim')
+    window.scrollTo({ top: 0 })
+  }
   const Active = TABS.find((t) => t.id === tab).C
   return (
     <div className="min-h-screen flex flex-col">
@@ -28,7 +40,7 @@ export default function App() {
             {TABS.map(({ id, label, icon: Icon }) => (
               <button
                 key={id}
-                onClick={() => setTab(id)}
+                onClick={() => goTab(id)}
                 className={`flex items-center gap-2 rounded-md px-3 py-2 text-sm transition ${
                   tab === id
                     ? 'bg-cyan-500/15 text-cyan-300 ring-1 ring-cyan-500/40'
@@ -42,7 +54,7 @@ export default function App() {
         </div>
       </header>
       <main className="mx-auto w-full max-w-7xl flex-1 px-4 py-6">
-        <Active />
+        <Active target={simTarget} onOpenSim={openSim} />
       </main>
       <footer className="border-t border-slate-800 py-3 text-center text-xs text-slate-600">
         Ingeniería Mecánica · 5.° año · Material didáctico — valores orientativos para fines de enseñanza

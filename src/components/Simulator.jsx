@@ -194,9 +194,9 @@ function Curve({ title, unit, fn, h, color, fmt }) {
   )
 }
 
-export default function Simulator() {
-  const [tech, setTech] = useState('fdm')
-  const [modes, setModes] = useState({ fdm: 'direct', pbf: 'sls', vat: 'sla' })
+export default function Simulator({ target }) {
+  const [tech, setTech] = useState(target?.tech || 'fdm')
+  const [modes, setModes] = useState(() => ({ fdm: 'direct', pbf: 'sls', vat: 'sla', ...(target?.mode && target.tech !== 'ded' ? { [target.tech]: target.mode } : {}) }))
   const [playing, setPlaying] = useState(true)
   const [speed, setSpeed] = useState(1)
   const [h, setH] = useState(0.2)
